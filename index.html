@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FOOTBALL NEWS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anuphan:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f2f4ef;--surface:#fff;--ink:#14201a;--muted:#5b6b62;--line:#d5dcd3;--pitch:#1c6b3b;--pitch-ink:#fff;--card:#f4c400;--card-ink:#1a1500}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1713;--surface:#17211b;--ink:#e8efe9;--muted:#93a69a;--line:#2a3a30;--pitch:#3fae6a;--pitch-ink:#07140c;--card:#f4c400;--card-ink:#1a1500}}
+:root[data-theme="dark"]{--bg:#0f1713;--surface:#17211b;--ink:#e8efe9;--muted:#93a69a;--line:#2a3a30;--pitch:#3fae6a;--pitch-ink:#07140c;--card:#f4c400;--card-ink:#1a1500}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.6 'Anuphan',system-ui,sans-serif}
+a{color:inherit}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--card);outline-offset:2px}
+header{background:var(--pitch);color:var(--pitch-ink);padding:14px 20px;display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+header h1{margin:0;font-size:1.35rem;font-weight:700;letter-spacing:.01em}
+header p{margin:0;font-size:.9rem;opacity:.85}
+.wrap{max-width:1080px;margin:0 auto;padding:20px;display:grid;grid-template-columns:260px 1fr;gap:24px}
+@media(max-width:800px){.wrap{grid-template-columns:1fr}}
+aside{align-self:start;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px}
+aside h2{font-size:1rem;margin:0 0 8px}
+aside h3{font-size:.85rem;color:var(--muted);margin:16px 0 6px;font-weight:600}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{border:1px solid var(--line);background:transparent;border-radius:999px;padding:3px 12px;font-size:.88rem}
+.chip[aria-pressed="true"]{background:var(--pitch);border-color:var(--pitch);color:var(--pitch-ink);font-weight:600}
+.link{background:none;border:0;color:var(--muted);text-decoration:underline;padding:0;font-size:.85rem;margin-top:12px}
+.modebar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:14px}
+.tabs{display:flex;gap:4px;border-bottom:2px solid var(--line);flex:1;min-width:260px}
+.tab{background:none;border:0;padding:8px 14px;font-weight:600;color:var(--muted);border-bottom:3px solid transparent;margin-bottom:-2px}
+.tab[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--pitch)}
+.quick{border:2px solid var(--card);background:transparent;border-radius:8px;padding:6px 14px;font-weight:700}
+.quick[aria-pressed="true"]{background:var(--card);color:var(--card-ink)}
+.postfilter{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-bottom:14px}
+.postfilter[hidden]{display:none}
+.postfilter .fl{font-size:.85rem;color:var(--muted);margin-right:2px}
+.postfilter .sh{padding:3px 12px;font-size:.88rem;margin-left:auto}
+.digest-head{background:var(--card);color:var(--card-ink);border-radius:10px 10px 0 0;padding:10px 16px;font-weight:700;display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px}
+.list{background:var(--surface);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.digest-head+.list{border-radius:0 0 10px 10px;border-top:0}
+.item{display:grid;grid-template-columns:1fr;gap:2px;padding:14px 16px;border-bottom:1px solid var(--line)}
+.item:last-child{border-bottom:0}
+.item h3{margin:0;font-size:1.05rem;line-height:1.4}
+.item h3 a{text-decoration:none}
+.item h3 a:hover{text-decoration:underline}
+.item p{margin:2px 0 0;color:var(--muted);font-size:.95rem;max-width:68ch}
+.meta{font-size:.82rem;color:var(--muted);display:flex;gap:10px;flex-wrap:wrap;margin-top:4px}
+.tag{border:1px solid var(--line);border-radius:4px;padding:0 6px}
+.src{font-weight:700;color:var(--ink)}
+.badge{position:absolute;top:8px;left:8px;background:var(--card);color:var(--card-ink);font-size:.72rem;font-weight:700;border-radius:4px;padding:1px 7px;z-index:1}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px}
+.clip{background:var(--surface);border:1px solid var(--line);border-radius:10px;overflow:hidden;display:flex;flex-direction:column}
+.thumb{aspect-ratio:16/9;background:linear-gradient(135deg,var(--pitch),#0d3b20);display:grid;place-items:center;color:#fff;font-size:2rem;position:relative}
+.thumb img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}
+.thumb span{position:relative}
+.clip div.b{padding:10px 12px}
+.clip h3{margin:0;font-size:.98rem;line-height:1.35}
+.empty{padding:28px 16px;text-align:center;color:var(--muted)}
+.note{font-size:.82rem;color:var(--muted);margin-top:18px}
+footer{max-width:1080px;margin:0 auto;padding:0 20px 30px}
+</style>
+</head>
+<body>
+<header>
+  <h1>FOOTBALL NEWS</h1>
+  <p>of Wasant, by Thanat, for Wasant</p>
+</header>
+
+<div class="wrap">
+  <aside aria-label="เลือกสิ่งที่ติดตาม">
+    <h2>ทีมของฉัน</h2>
+    <h3>ลีก</h3>
+    <div class="chips" id="leagues"></div>
+    <h3 id="teamhead">ทีม</h3>
+    <div class="chips" id="teams"></div>
+    <button class="link" id="clear">ล้างทั้งหมด (ดูทุกข่าว)</button>
+  </aside>
+
+  <main>
+    <div class="modebar">
+      <button class="quick" id="quick" aria-pressed="true">สรุปด่วน 5 ข่าว</button>
+      <div class="tabs" role="tablist" id="tabs">
+        <button class="tab" role="tab" data-tab="news" aria-selected="true">ข่าว</button>
+        <button class="tab" role="tab" data-tab="clip" aria-selected="false">ไฮไลท์</button>
+        <button class="tab" role="tab" data-tab="post" aria-selected="false">หลังเกม</button>
+      </div>
+    </div>
+    <div class="postfilter" id="postfilter" hidden></div>
+    <div id="out" aria-live="polite"></div>
+    <p class="note" id="srcnote"></p>
+  </main>
+</div>
+
+<footer><p class="note">ข้อมูลในหน้านี้เป็นตัวอย่างสำหรับทดสอบหน้าตา ลิงก์ยังไม่ชี้ไปที่ข่าวจริง เมื่อเชื่อมระบบดึงข้อมูลแล้ว (ดู DATA_URL ในโค้ด) ข่าวจริงจะมาแทนที่โดยอัตโนมัติ</p></footer>
+
+<script>
+// ===== 1) ตั้งค่า: ไฟล์ JSON ที่ระบบหลังบ้านของคุณสร้างขึ้น =====
+const DATA_URL = 'data/feed.json';
+
+// ===== 2) รายการลีกและทีม (แก้เพิ่มได้) =====
+const LEAGUES = {epl:'พรีเมียร์ลีก',ll:'ลาลีกา',bl:'บุนเดสลีกา',sa:'เซเรียอา',l1:'ลีกเอิง',ucl:'แชมเปียนส์ลีก'};
+let UCL_SEASON = '2026-27';
+// ทีมที่ให้เลือกในแต่ละลีก (ชื่อต้องตรงกับ TEAMS ใน build_feed.py)
+// ถ้า data/feed.json มี "teams" มาด้วย จะใช้รายชื่อจากไฟล์นั้นแทนค่าเริ่มต้นนี้ (ข้อมูลฤดูกาล 2026-27) (ข้อมูลฤดูกาล 2026-27)
+let TEAM_LISTS = {
+  epl:['Arsenal','Aston Villa','Bournemouth','Brentford','Brighton','Chelsea','Coventry City','Crystal Palace','Everton','Fulham','Hull City','Ipswich Town','Leeds United','Liverpool','Man City','Man United','Newcastle','Nottingham Forest','Sunderland','Tottenham'],
+  ll:['Alavés','Athletic Bilbao','Atletico Madrid','Barcelona','Celta Vigo','Deportivo La Coruña','Elche','Espanyol','Getafe','Levante','Málaga','Osasuna','Racing Santander','Rayo Vallecano','Real Betis','Real Madrid','Real Sociedad','Sevilla','Valencia','Villarreal'],
+  bl:['Augsburg','Bayern','Cologne','Dortmund','Eintracht Frankfurt','Elversberg','Freiburg','Gladbach','Hamburg','Hoffenheim','Leipzig','Leverkusen','Mainz','Paderborn','Schalke','Stuttgart','Union Berlin','Werder Bremen'],
+  sa:['AC Milan','Atalanta','Bologna','Cagliari','Como','Fiorentina','Frosinone','Genoa','Inter','Juventus','Lazio','Lecce','Monza','Napoli','Parma','Roma','Sassuolo','Torino','Udinese','Venezia'],
+  l1:['Angers','Auxerre','Brest','Le Havre','Le Mans','Lens','Lille','Lorient','Lyon','Marseille','Monaco','Nice','Paris FC','PSG','Rennes','Strasbourg','Toulouse','Troyes'],
+  ucl:['Arsenal','Aston Villa','Liverpool','Man City','Man United','Atletico Madrid','Barcelona','Real Betis','Real Madrid','Villarreal','Como','Inter','Napoli','Roma','Bayern','Dortmund','Leipzig','Stuttgart','PSG','Lens','Lille','AEK Athens','Bodø/Glimt','Club Brugge','Fenerbahçe','Feyenoord','Galatasaray','LASK','Porto','PSV','Sabah','Shakhtar','Slavia Prague','Slovan Bratislava','Sporting CP','Viking']
+};
+
+// ===== 3) ข้อมูลตัวอย่าง (ใช้เมื่อโหลด DATA_URL ไม่ได้) =====
+// รูปแบบ: {type:'news'|'clip'|'post', title, summary, source, url, league, teams[], mins, time, yt}
+const SAMPLE = [
+ {type:'news',title:'[ตัวอย่าง] ลิเวอร์พูลลุ้นตัวหลักกลับมาก่อนเกมใหญ่',summary:'สรุปสั้น 1–2 บรรทัดของข่าว เพื่อให้คนมีเวลาน้อยตัดสินใจได้ว่าจะอ่านต่อหรือไม่',source:'ตัวอย่าง',url:'#',league:'epl',teams:['Liverpool'],mins:2,time:'1 ชม. ที่แล้ว'},
+{type:'news',title:'[ตัวอย่าง] แชมเปียนส์ลีก: สรุปผลนัดล่าสุดของลีกเฟส',summary:'ข่าวตัวอย่างสำหรับทดสอบแท็บแชมเปียนส์ลีก',source:'ตัวอย่าง',url:'#',league:'ucl',teams:['Real Madrid','Man City'],mins:3,time:'4 ชม. ที่แล้ว'},
+ {type:'news',title:'[ตัวอย่าง] อาร์เซนอลเตรียมต่อสัญญาแกนหลักของทีม',summary:'ข่าวตัวอย่างสำหรับทดสอบการกรองตามทีมและลีก',source:'ตัวอย่าง',url:'#',league:'epl',teams:['Arsenal'],mins:3,time:'2 ชม. ที่แล้ว'},
+ {type:'news',title:'[ตัวอย่าง] เรอัล มาดริดปรับแผนรับเกมคลาสสิโก',summary:'ข่าวตัวอย่างจากลาลีกา',source:'ตัวอย่าง',url:'#',league:'ll',teams:['Real Madrid','Barcelona'],mins:2,time:'3 ชม. ที่แล้ว'},
+ {type:'news',title:'[ตัวอย่าง] บาเยิร์นนำตารางต่อ หลังชนะนัดล่าสุด',summary:'ข่าวตัวอย่างจากบุนเดสลีกา',source:'ตัวอย่าง',url:'#',league:'bl',teams:['Bayern'],mins:2,time:'5 ชม. ที่แล้ว'},
+ {type:'news',title:'[ตัวอย่าง] แมนฯ ซิตี้ลุ้นคว้าตัวเสริมแนวรับ',summary:'ข่าวตัวอย่างเรื่องตลาดนักเตะ',source:'ตัวอย่าง',url:'#',league:'epl',teams:['Man City'],mins:3,time:'8 ชม. ที่แล้ว'},
+ {type:'clip',title:'[ตัวอย่าง] ไฮไลต์ ลิเวอร์พูล vs คู่แข่ง',source:'ช่องไฮไลต์ (ตัวอย่าง)',url:'#',league:'epl',teams:['Liverpool'],mins:4,time:'1 วันที่แล้ว',yt:''},
+ {type:'clip',title:'[ตัวอย่าง] ไฮไลต์ ลาลีกา นัดเด็ด',source:'ช่องไฮไลต์ (ตัวอย่าง)',url:'#',league:'ll',teams:['Real Madrid'],mins:5,time:'1 วันที่แล้ว',yt:''},
+ {type:'post',title:'[ตัวอย่าง] วิเคราะห์หลังเกม: ทำไมอาร์เซนอลถึงชนะ',source:'ยูทูปเบอร์สายหลังเกม A (ตัวอย่าง)',url:'#',league:'epl',teams:['Arsenal'],mins:12,time:'5 ชม. ที่แล้ว',yt:''},
+ {type:'post',title:'[ตัวอย่าง] คุยหลังเกม แมนฯ ซิตี้ vs คู่แข่ง',short:true,source:'ยูทูปเบอร์สายหลังเกม B (ตัวอย่าง)',url:'#',league:'epl',teams:['Man City'],mins:15,time:'7 ชม. ที่แล้ว',yt:''},
+];
+
+// ===== 4) สถานะ + เก็บค่าที่ผู้ใช้เลือก =====
+const S = {league:'', teams:new Set(), channels:new Set(), shorts:true, quick:true, tab:'news', items:SAMPLE, live:false};
+try{const s=JSON.parse(localStorage.getItem('sn-pref')||'{}');if(s.lg in LEAGUES){S.league=s.lg;S.teams=new Set(s.t||[])}if(typeof s.q==='boolean')S.quick=s.q;if(Array.isArray(s.ch))S.channels=new Set(s.ch);if(typeof s.sh==='boolean')S.shorts=s.sh}catch(e){}
+pruneTeams();
+const save=()=>{try{localStorage.setItem('sn-pref',JSON.stringify({lg:S.league,t:[...S.teams],q:S.quick,ch:[...S.channels],sh:S.shorts}))}catch(e){}};
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const safeUrl=u=>/^https?:\/\//.test(u||'')?u:'#';
+
+// ===== 5) วาดหน้าจอ =====
+function chips(el,list,isOn,onPick){
+  el.innerHTML=list.map(([k,v])=>`<button class="chip" aria-pressed="${isOn(k)}" data-k="${esc(k)}">${esc(v)}</button>`).join('');
+  el.onclick=e=>{const b=e.target.closest('.chip');if(b){onPick(b.dataset.k);save();render()}};
+}
+function pruneTeams(){const ok=new Set(TEAM_LISTS[S.league]||[]);S.teams=new Set([...S.teams].filter(t=>ok.has(t)))}
+// ไม่เลือกทีม = ข่าวทั้งลีก / เลือกทีม = ข่าวของทีมที่เลือก (จากทุกแหล่ง)
+function match(it){
+  if(!S.league)return true;
+  if(S.teams.size)return (it.teams||[]).some(t=>S.teams.has(t));
+  return it.league===S.league;
+}
+function itemHtml(it){
+  const tags=[LEAGUES[it.league],...(it.teams||[])].filter(Boolean).map(t=>`<span class="tag">${esc(t)}</span>`).join('');
+  return `<article class="item"><h3><a href="${esc(safeUrl(it.url))}" target="_blank" rel="noopener">${esc(it.title)}</a></h3>`+
+    (it.summary?`<p>${esc(it.summary)}</p>`:'')+
+    `<div class="meta"><span class="src">${esc(it.source)}</span><span>${esc(it.time)}</span>${it.orig_title?`<span class="tag" title="${esc(it.orig_title)}">แปลจากอังกฤษ</span>`:''}${tags}</div></article>`;
+}
+function clipHtml(it){
+  const img=it.yt?`<img loading="lazy" alt="" src="https://i.ytimg.com/vi/${encodeURIComponent(it.yt)}/hqdefault.jpg">`:'';
+  return `<a class="clip" style="text-decoration:none" href="${esc(safeUrl(it.url))}" target="_blank" rel="noopener"><div class="thumb">${it.short?'<span class="badge">Shorts</span>':''}${img}<span>▶</span></div><div class="b"><h3>${esc(it.title)}</h3><div class="meta"><span>${esc(it.source)}</span>${it.mins?`<span>${esc(it.mins)} นาที</span>`:''}<span>${esc(it.time)}</span></div></div></a>`;
+}
+function render(){
+  // ลีกเลือกได้ทีละอัน: เปลี่ยนลีกแล้วทีมที่เลือกไว้จะถูกล้าง / ยังไม่เลือกลีก = ไม่แสดงทีม
+  chips(document.getElementById('leagues'),[['','ทั้งหมด'],...Object.entries(LEAGUES)],k=>k===S.league,k=>{if(k!==S.league){S.league=k;S.teams.clear()}});
+  const tEl=document.getElementById('teams'),tl=TEAM_LISTS[S.league]||[];
+  document.getElementById('teamhead').textContent=S.league==='ucl'?`ทีม (ฤดูกาล ${UCL_SEASON})`:'ทีม';
+  if(tl.length)chips(tEl,tl.map(t=>[t,t]),k=>S.teams.has(k),k=>{S.teams.has(k)?S.teams.delete(k):S.teams.add(k)});
+  else{tEl.onclick=null;tEl.innerHTML='<span class="note" style="margin:0">เลือกลีกเพื่อเลือกทีมที่ติดตาม</span>'}
+  document.getElementById('quick').setAttribute('aria-pressed',S.quick);
+  document.querySelectorAll('.tab').forEach(t=>t.setAttribute('aria-selected',t.dataset.tab===S.tab));
+  // หลังเกม: ตัวกรองช่อง + ปุ่มเปิด/ปิด Shorts
+  const srcs=[...new Set(S.items.filter(i=>i.type==='post').map(i=>i.source))];
+  const act=new Set([...S.channels].filter(c=>srcs.includes(c)));
+  const pf=document.getElementById('postfilter');
+  if(S.tab==='post'){
+    pf.hidden=false;
+    pf.innerHTML='<span class="fl">ช่อง</span><button class="chip" data-ch="" aria-pressed="'+!act.size+'">ทั้งหมด</button>'+
+      srcs.map(c=>`<button class="chip" data-ch="${esc(c)}" aria-pressed="${act.has(c)}">${esc(c)}</button>`).join('')+
+      `<button class="quick sh" id="shbtn" aria-pressed="${S.shorts}">Shorts: ${S.shorts?'แสดง':'ซ่อน'}</button>`;
+  }else pf.hidden=true;
+  let rows=S.items.filter(i=>i.type===S.tab&&match(i));
+  if(S.tab==='post')rows=rows.filter(i=>(!act.size||act.has(i.source))&&(S.shorts||!i.short));
+  const out=document.getElementById('out');
+  const quickOn=S.quick&&S.tab==='news';
+  if(quickOn)rows=rows.slice(0,5);
+  if(!rows.length){out.innerHTML='<div class="list"><div class="empty">ยังไม่มีรายการตามตัวกรองที่เลือก ลองเปลี่ยนลีก ทีม หรือตัวกรองช่อง หรือกด “ล้างทั้งหมด”</div></div>';}
+  else if(S.tab==='news'){
+    out.innerHTML=(quickOn?`<div class="digest-head"><span>สรุปด่วนของคุณ</span><span>${rows.length} ข่าว</span></div>`:'')+`<div class="list">${rows.map(itemHtml).join('')}</div>`;
+  } else out.innerHTML=`<div class="grid">${rows.map(clipHtml).join('')}</div>`;
+  document.getElementById('srcnote').textContent=S.live?'':'กำลังแสดงข้อมูลตัวอย่าง';
+}
+document.getElementById('quick').onclick=()=>{S.quick=!S.quick;save();render()};
+document.getElementById('tabs').onclick=e=>{const t=e.target.closest('.tab');if(t){S.tab=t.dataset.tab;render()}};
+document.getElementById('clear').onclick=()=>{S.league='';S.teams.clear();S.channels.clear();S.shorts=true;save();render()};
+document.getElementById('postfilter').onclick=e=>{
+  const b=e.target.closest('button');if(!b)return;
+  if(b.id==='shbtn')S.shorts=!S.shorts;
+  else if(b.dataset.ch==='')S.channels.clear();
+  else{const c=b.dataset.ch;S.channels.has(c)?S.channels.delete(c):S.channels.add(c)}
+  save();render();
+};
+
+// ===== 6) โหลดข่าวจริงจาก DATA_URL (ถ้ามี) =====
+fetch(DATA_URL).then(r=>r.ok?r.json():Promise.reject()).then(d=>{
+  if(d.teams&&typeof d.teams==='object')for(const l in LEAGUES)if(Array.isArray(d.teams[l]))TEAM_LISTS[l]=d.teams[l].filter(t=>typeof t==='string');
+  if(typeof d.ucl_season==='string')UCL_SEASON=d.ucl_season;
+  if(Array.isArray(d.items)&&d.items.length){S.items=d.items;S.live=true}
+  if(S.live){const ok=new Set(S.items.filter(i=>i.type==='post').map(i=>i.source));S.channels=new Set([...S.channels].filter(c=>ok.has(c)))}
+  pruneTeams();render();
+}).catch(()=>{});
+render();
+</script>
+</body>
+</html>
